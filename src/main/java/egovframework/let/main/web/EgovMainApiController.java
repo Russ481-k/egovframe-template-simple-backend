@@ -38,7 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @SessionAttributes(types = ComDefaultVO.class)
-@Tag(name="EgovMainApiController",description = "메인 페이지")
+@Tag(name="EgovMainApi",description = "메인 페이지")
 public class EgovMainApiController {
 
 	/**
@@ -56,7 +56,7 @@ public class EgovMainApiController {
 	@Operation(
 			summary = "메인 페이지",
 			description = "템플릿 메인 페이지 조회",
-			tags = {"EgovMainApiController"}
+			tags = {"EgovMainApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공")

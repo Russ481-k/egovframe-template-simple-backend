@@ -50,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@Tag(name="SnsLoginApiController",description = "Sns 로그인 관련")
+@Tag(name="UserSnsLogin",description = "Sns 로그인 관련")
 public class SnsLoginApiController {
 	
 	/** EgovLoginService */
@@ -75,11 +75,7 @@ public class SnsLoginApiController {
 	 * @param HttpServletResponse
 	 * @return void 
 	 */
-	@Operation(
-			summary = "카카오API 로그인",
-			description = "카카오API 로그인 처리",
-			tags = {"SnsLoginApiController"}
-	)
+	@Operation(summary = "카카오API 로그인")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "인증 성공"),
 			@ApiResponse(responseCode = "401", description = "인증 실패")
@@ -100,11 +96,7 @@ public class SnsLoginApiController {
 	 * @param HttpServletResponse, HttpServletRequest
 	 * @return HashMap<String, Object> 
 	 */
-	@Operation(
-			summary = "카카오API 로그인 콜백",
-			description = "카카오API 로그인 콜백처리",
-			tags = {"SnsLoginApiController"}
-	)
+	@Operation(summary = "카카오API 로그인 콜백")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "인증 성공"),
 			@ApiResponse(responseCode = "401", description = "인증 실패")
@@ -186,11 +178,7 @@ public class SnsLoginApiController {
 	 * @param HttpServletResponse
 	 * @return void 
 	 */
-	@Operation(
-			summary = "네이버API 로그인",
-			description = "네이버API 로그인 처리",
-			tags = {"SnsLoginApiController"}
-	)
+	@Operation(summary = "네이버API 로그인")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "인증 성공"),
 			@ApiResponse(responseCode = "401", description = "인증 실패")
@@ -214,11 +202,7 @@ public class SnsLoginApiController {
 	 * @param HttpServletResponse, HttpServletRequest
 	 * @return HashMap<String, Object> 
 	 */
-	@Operation(
-			summary = "네이버API 로그인 콜백",
-			description = "네이버API 로그인 콜백처리",
-			tags = {"SnsLoginApiController"}
-	)
+	@Operation(summary = "네이버API 로그인 콜백")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "인증 성공"),
 			@ApiResponse(responseCode = "401", description = "인증 실패")

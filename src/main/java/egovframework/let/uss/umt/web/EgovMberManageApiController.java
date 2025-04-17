@@ -64,7 +64,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * </pre>
  */
 @RestController
-@Tag(name="EgovMberManageApiController",description = "회원 관리")
+@Tag(name="EgovMberManageApi",description = "회원 관리")
 public class EgovMberManageApiController {
 
 	@Autowired
@@ -101,7 +101,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원 목록조회화면",
 			description = "관리자단에서 회원에 대한 목록을 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -182,7 +182,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원 등록화면",
 			description = "관리자단에서 회원등록화면에 필요한 값 생성",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -226,7 +226,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원 등록처리",
 			description = "관리자단에서 회원 등록처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -282,7 +282,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원정보 수정용 상세조회화면",
 			description = "관리자단에서 회원정보 수정을 위해 회원정보를 상세조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -332,7 +332,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원 수정처리",
 			description = "관리자단에서 회원 수정처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -390,7 +390,7 @@ public class EgovMberManageApiController {
 			summary = "관리자단에서 회원 삭제처리",
 			description = "관리자단에서 회원 삭제처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "삭제 성공"),
@@ -421,7 +421,7 @@ public class EgovMberManageApiController {
 			summary = "사용자단에서 회원정보 수정용 상세조회화면",
 			description = "사용자단에서 회원정보 수정을 위해 회원정보를 상세조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -457,7 +457,7 @@ public class EgovMberManageApiController {
 			summary = "사용자단에서 회원 수정처리",
 			description = "사용자단에서 회원 수정처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -498,7 +498,7 @@ public class EgovMberManageApiController {
 			summary = "사용자단에서 회원 탈퇴처리",
 			description = "사용자단에서 회원 탈퇴처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -537,7 +537,7 @@ public class EgovMberManageApiController {
 	@Operation(
 			summary = "사용자단에서 회원 등록처리",
 			description = "사용자단에서 회원 등록처리",
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -578,7 +578,7 @@ public class EgovMberManageApiController {
 	@Operation(
 			summary = "사용자단에서 회원 가입화면",
 			description = "사용자단에서 회원가입화면에 필요한 값 생성",
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -626,7 +626,7 @@ public class EgovMberManageApiController {
 	@Operation(
 			summary = "사용자단에서 회원 약관확인",
 			description = "사용자단에서 회원 약관확인에 필요한 값 생성",
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -659,7 +659,7 @@ public class EgovMberManageApiController {
 	@Operation(
 			summary = "사용자아이디의 중복여부 체크처리",
 			description = "사용자아이디의 중복여부 체크처리",
-			tags = {"EgovMberManageApiController"}
+			tags = {"EgovMberManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),

@@ -51,7 +51,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
-@Tag(name="EgovImageProcessController",description = "이미지 처리")
+@Tag(name="EgovImageProcess",description = "이미지 처리")
 public class EgovImageProcessController extends HttpServlet {
 
 	/**
@@ -79,7 +79,7 @@ public class EgovImageProcessController extends HttpServlet {
     @Operation(
 			summary = "이미지 미리보기",
 			description = "첨부된 이미지에 대한 미리보기 기능을 제공",
-			tags = {"EgovImageProcessController"}
+			tags = {"EgovImageProcess"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "성공")

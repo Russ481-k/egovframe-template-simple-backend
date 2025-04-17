@@ -41,3 +41,43 @@ target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# vscode
+.vscode/
+
+# Application Properties
+src/main/resources/application-*.yml
+!src/main/resources/application.yml
+
+# Environment Variables
+.env
+.env.*
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# Build
+target/
+build/
+*.jar
+*.war
+*.ear
+
+# Logs
+logs/
+*.log
+*.log.*
+/backend
+/query
+
+# Temp
+*.tmp
+*.temp
+
+# OS
+.DS_Store
+Thumbs.db

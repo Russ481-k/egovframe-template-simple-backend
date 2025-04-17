@@ -2,7 +2,7 @@
 <!DOCTYPE xml>
 <Configuration scan="true">
 
-	<property resource="application.properties"/>
+	<property resource="application.yml"/>
 
 	<!-- 로그 파일이 저장될 경로 -->
 	<property name="LOG_PATH" value="${logging.file.path}" />

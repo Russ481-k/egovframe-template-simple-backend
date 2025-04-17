@@ -30,24 +30,18 @@ import egovframework.com.cmm.service.ResultVO;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-
         ResultVO resultVO = new ResultVO();
         resultVO.setResultCode(ResponseCode.AUTH_ERROR.getCode());
         resultVO.setResultMessage(ResponseCode.AUTH_ERROR.getMessage());
         ObjectMapper mapper = new ObjectMapper();
 
-        //Convert object to JSON string
         String jsonInString = mapper.writeValueAsString(resultVO);
-
-
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON.toString());
         response.setCharacterEncoding("UTF-8");
         response.getWriter().println(jsonInString);
-
     }
 }

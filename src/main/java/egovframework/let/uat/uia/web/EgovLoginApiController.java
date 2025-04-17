@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import egovframework.com.cmm.EgovMessageSource;
@@ -49,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@Tag(name="EgovLoginApiController",description = "로그인 관련")
+@Tag(name="EgovLoginApi",description = "로그인 관련")
 public class EgovLoginApiController {
 
 	/** EgovLoginService */
@@ -83,7 +84,7 @@ public class EgovLoginApiController {
 	@Operation(
 			summary = "일반 로그인",
 			description = "일반 로그인 처리",
-			tags = {"EgovLoginApiController"}
+			tags = {"EgovLoginApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "로그인 성공"),
@@ -115,7 +116,7 @@ public class EgovLoginApiController {
 	@Operation(
 			summary = "JWT 로그인",
 			description = "JWT 로그인 처리",
-			tags = {"EgovLoginApiController"}
+			tags = {"EgovLoginApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "로그인 성공"),
@@ -170,7 +171,7 @@ public class EgovLoginApiController {
 			summary = "로그아웃",
 			description = "로그아웃 처리(JWT,일반 관계 없이)",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovLoginApiController"}
+			tags = {"EgovLoginApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "로그아웃 성공"),
@@ -185,6 +186,42 @@ public class EgovLoginApiController {
 		resultVO.setResultCode(ResponseCode.SUCCESS.getCode());
 		resultVO.setResultMessage(ResponseCode.SUCCESS.getMessage());
 
+		return resultVO;
+	}
+
+	@Operation(
+			summary = "토큰 검증",
+			description = "JWT 토큰 유효성 검증",
+			tags = {"EgovLoginApi"}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "유효한 토큰"),
+			@ApiResponse(responseCode = "401", description = "유효하지 않은 토큰")
+	})
+	@PostMapping("/auth/validate")
+	public ResultVO validateToken(HttpServletRequest request) {
+		ResultVO resultVO = new ResultVO();
+		String token = request.getHeader("Authorization");
+		
+		if (token == null || token.isEmpty()) {
+			resultVO.setResultCode(ResponseCode.AUTH_ERROR.getCode());
+			resultVO.setResultMessage(ResponseCode.AUTH_ERROR.getMessage());
+			return resultVO;
+		}
+		
+		try {
+			if (jwtTokenUtil.validateToken(token)) {
+				resultVO.setResultCode(ResponseCode.SUCCESS.getCode());
+				resultVO.setResultMessage(ResponseCode.SUCCESS.getMessage());
+			} else {
+				resultVO.setResultCode(ResponseCode.AUTH_ERROR.getCode());
+				resultVO.setResultMessage(ResponseCode.AUTH_ERROR.getMessage());
+			}
+		} catch (Exception e) {
+			resultVO.setResultCode(ResponseCode.AUTH_ERROR.getCode());
+			resultVO.setResultMessage(ResponseCode.AUTH_ERROR.getMessage());
+		}
+		
 		return resultVO;
 	}
 }

@@ -1,0 +1,142 @@
+spring:
+  profiles:
+    active: dev
+  legacy:
+    processing: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+  file:
+    upload-dir: ${FILE_UPLOAD_DIR:./uploads}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cms_new?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+  config:
+    use-legacy-processing: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH:/}
+    session:
+      timeout: ${SERVER_SERVLET_SESSION_TIMEOUT:3600}
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:DEBUG}
+  file:
+    name: ${LOG_FILE_NAME:backend}
+    path: ${LOG_FILE_PATH:./log}
+  logback:
+    rollingpolicy:
+      max-file-size: ${LOG_MAX_FILE_SIZE:10MB}
+      max-history: ${LOG_MAX_HISTORY:30}
+
+springdoc:
+  version: v4.2.0
+  packages-to-scan: egovframework
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+    doc-expansion: none
+  api-docs:
+    path: /v3/api-docs
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+
+Globals:
+  LocalIp: ${GLOBALS_LOCAL_IP:127.0.0.1}
+  DbType: ${GLOBALS_DB_TYPE:mysql}
+  pageUnit: ${GLOBALS_PAGE_UNIT:10}
+  pageSize: ${GLOBALS_PAGE_SIZE:10}
+  posblAtchFileSize: ${GLOBALS_POSBL_ATCH_FILE_SIZE:5242880}
+  fileStorePath: ${GLOBALS_FILE_STORE_PATH:./files}
+  addedOptions: ${GLOBALS_ADDED_OPTIONS:false}
+  MainPage: ${GLOBALS_MAIN_PAGE:/cmm/main/mainPage.do}
+  Allow:
+    Origin: ${GLOBALS_ALLOW_ORIGIN:http://localhost:3000}
+  crypto:
+    algoritm: ${GLOBALS_CRYPTO_ALGORITM:egovframe}
+  fileUpload:
+    Extensions:
+      Images: ${GLOBALS_FILE_UPLOAD_EXTENSIONS_IMAGES:.gif.jpg.jpeg.png}
+      Default: ${GLOBALS_FILE_UPLOAD_EXTENSIONS:.gif.jpg.jpeg.png.xls.xlsx}
+  hsql:
+    DriverClassName: ${GLOBALS_HSQL_DRIVER:net.sf.log4jdbc.DriverSpy}
+    Url: ${GLOBALS_HSQL_URL:jdbc:log4jdbc:hsqldb:hsql://127.0.0.1/sampledb}
+    UserName: ${GLOBALS_HSQL_USERNAME:sa}
+    Password: ${GLOBALS_HSQL_PASSWORD:}
+  mysql:
+    DriverClassName: ${GLOBALS_MYSQL_DRIVER:net.sf.log4jdbc.DriverSpy}
+    Url: ${GLOBALS_MYSQL_URL:jdbc:log4jdbc:mysql://127.0.0.1:3306/sht}
+    UserName: ${GLOBALS_MYSQL_USERNAME:root}
+    Password: ${GLOBALS_MYSQL_PASSWORD:}
+  oracle:
+    DriverClassName: ${GLOBALS_ORACLE_DRIVER:oracle.jdbc.driver.OracleDriver}
+    Url: ${GLOBALS_ORACLE_URL:jdbc:oracle:thin:@127.0.0.1:1521:egovfrm}
+    UserName: ${GLOBALS_ORACLE_USERNAME:}
+    Password: ${GLOBALS_ORACLE_PASSWORD:}
+  altibase:
+    DriverClassName: ${GLOBALS_ALTIBASE_DRIVER:Altibase.jdbc.driver.AltibaseDriver}
+    Url: ${GLOBALS_ALTIBASE_URL:jdbc:Altibase://127.0.0.1:1721/egovfrm?encoding=UTF-8}
+    UserName: ${GLOBALS_ALTIBASE_USERNAME:}
+    Password: ${GLOBALS_ALTIBASE_PASSWORD:}
+  tibero:
+    DriverClassName: ${GLOBALS_TIBERO_DRIVER:com.tmax.tibero.jdbc.TbDriver}
+    Url: ${GLOBALS_TIBERO_URL:jdbc:tibero:thin:@127.0.0.1:1821:egovfrm}
+    UserName: ${GLOBALS_TIBERO_USERNAME:}
+    Password: ${GLOBALS_TIBERO_PASSWORD:}
+  cubrid:
+    DriverClassName: ${GLOBALS_CUBRID_DRIVER:cubrid.jdbc.driver.CUBRIDDriver}
+    Url: ${GLOBALS_CUBRID_URL:jdbc:cubrid:127.0.0.1:33000:sht:::?charset=utf-8}
+    UserName: ${GLOBALS_CUBRID_USERNAME:}
+    Password: ${GLOBALS_CUBRID_PASSWORD:}
+
+Sns:
+  naver:
+    clientId: ${SNS_NAVER_CLIENT_ID:YOUR_CLIENT_ID}
+    clientSecret: ${SNS_NAVER_CLIENT_SECRET:YOUR_CLIENT_SECRET}
+    callbackUrl: ${SNS_NAVER_CALLBACK_URL:http://localhost:3000/login/naver/callback}
+  kakao:
+    clientId: ${SNS_KAKAO_CLIENT_ID:YOUR_CLIENT_ID}
+    callbackUrl: ${SNS_KAKAO_CALLBACK_URL:http://localhost:3000/login/kakao/callback}
+
+jwt:
+  secret: ${JWT_SECRET:your-256-bit-secret-key-here-must-be-at-least-256-bits-long}
+  expiration: ${JWT_EXPIRATION:3600000}
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:86400000}
+  header: ${JWT_HEADER:Authorization}
+  prefix: ${JWT_PREFIX:Bearer}

@@ -37,7 +37,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * </pre>
  */
 @RestController
-@Tag(name="EgovFileMngApiController",description = "파일 관리")
+@Tag(name="EgovFileMngApi",description = "파일 관리")
 public class EgovFileMngApiController {
 
     @Resource(name = "EgovFileMngService")
@@ -59,7 +59,7 @@ public class EgovFileMngApiController {
 			summary = "파일 삭제",
 			description = "첨부파일에 대한 삭제를 처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovFileMngApiController"}
+			tags = {"EgovFileMngApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "성공")

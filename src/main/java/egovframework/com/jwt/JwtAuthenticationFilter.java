@@ -2,6 +2,7 @@ package egovframework.com.jwt;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private EgovJwtTokenUtil jwtTokenUtil;
     public static final String HEADER_STRING = "Authorization";
+    private static final String BEARER_PREFIX = "Bearer ";
 
     @Override //로그인 이후 HttpServletRequest 요청할 때마다 실행(스프링의 AOP기능)
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -44,8 +46,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean verificationFlag = true;
 
         // step 1. request header에서 토큰을 가져온다.
-        String jwtToken = EgovStringUtil.isNullToString(req.getHeader(HEADER_STRING));
+        String header = req.getHeader(HEADER_STRING);
+        String jwtToken = null;
 
+        if (header != null && header.startsWith(BEARER_PREFIX)) {
+            jwtToken = header.substring(BEARER_PREFIX.length());
+        }
 
         // step 2. 토큰에 내용이 있는지 확인해서 id값을 가져옴
         // Exception 핸들링 추가처리 (토큰 유효성, 토큰 변조 여부, 토큰 만료여부)
@@ -53,47 +59,46 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String id = null;
 
         try {
-
-            id = jwtTokenUtil.getUserIdFromToken(jwtToken);
-            if (id == null) {
-                logger.debug("jwtToken not validate");
-                verificationFlag =  false;
+            if (jwtToken != null) {
+                id = jwtTokenUtil.getUserIdFromToken(jwtToken);
+                if (id == null) {
+                    logger.debug("jwtToken not validate");
+                    verificationFlag = false;
+                }
+                logger.debug("===>>> id = " + id);
             }
-            logger.debug("===>>> id = " + id);
         } catch (IllegalArgumentException | ExpiredJwtException | MalformedJwtException | UnsupportedJwtException | SignatureException e) {
             logger.debug("Unable to verify JWT Token: " + e.getMessage());
             verificationFlag = false;
         }
 
         LoginVO loginVO = new LoginVO();
-        if( verificationFlag ){
+        if (verificationFlag && jwtToken != null) {
             logger.debug("jwtToken validated");
             loginVO.setId(id);
-            loginVO.setUserSe( jwtTokenUtil.getUserSeFromToken(jwtToken) );
-            loginVO.setUniqId( jwtTokenUtil.getInfoFromToken("uniqId",jwtToken) );
-            loginVO.setOrgnztId( jwtTokenUtil.getInfoFromToken("orgnztId",jwtToken) );
-            loginVO.setName( jwtTokenUtil.getInfoFromToken("name",jwtToken) );
+            loginVO.setUserSe(jwtTokenUtil.getUserSeFromToken(jwtToken));
+            loginVO.setUniqId(jwtTokenUtil.getInfoFromToken("uniqId", jwtToken));
+            loginVO.setOrgnztId(jwtTokenUtil.getInfoFromToken("orgnztId", jwtToken));
+            loginVO.setName(jwtTokenUtil.getInfoFromToken("name", jwtToken));
             loginVO.setGroupNm(jwtTokenUtil.getInfoFromToken("groupNm", jwtToken));//토큰에서 가져온 스프링시큐리티용 그룹명값 부여
-            logger.debug("===>>> loginVO.getUserSe() = "+loginVO.getUserSe());
-            if(loginVO.getGroupNm().equals("ROLE_ADMIN")) { //스프링시큐리티 관리자 권한은 getGroupNm값으로 구분
-            	UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginVO, null,
+            logger.debug("===>>> loginVO.getUserSe() = " + loginVO.getUserSe());
+            if (loginVO.getGroupNm().equals("ROLE_ADMIN")) { //스프링시큐리티 관리자 권한은 getGroupNm값으로 구분
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginVO, null,
                         Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))
                 );
-            	logger.debug("authentication1 ===>>> " + authentication);
-            	authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                logger.debug("authentication1 ===>>> " + authentication);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }else {
-            	UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginVO, null,
+            } else {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginVO, null,
                         Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))
                 );
-            	logger.debug("authentication2 ===>>> " + authentication);
-            	authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                logger.debug("authentication2 ===>>> " + authentication);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
 
-
         chain.doFilter(req, res);
-
     }
 }

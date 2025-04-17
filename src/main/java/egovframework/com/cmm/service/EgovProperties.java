@@ -64,8 +64,8 @@ public class EgovProperties {
 	// /target/classes/egovframework/egovProps/globals.properties
 	//public static final String GLOBALS_PROPERTIES_FILE = RELATIVE_PATH_PREFIX + FILE_SEPARATOR +"egovProps"+ FILE_SEPARATOR + "globals.properties";
 		
-	// /target/classes/application.properties
-	public static final String GLOBALS_PROPERTIES_FILE = "classpath:" + FILE_SEPARATOR + "application.properties";
+	// /target/classes/application.yml
+	public static final String GLOBALS_PROPERTIES_FILE = "classpath:" + FILE_SEPARATOR + "application.yml";
 
 	/**
 	 * 인자로 주어진 문자열을 Key값으로 하는 상대경로 프로퍼티 값을 절대경로로 반환한다(Globals.java 전용)

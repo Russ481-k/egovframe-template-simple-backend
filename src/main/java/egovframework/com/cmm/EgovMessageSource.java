@@ -2,7 +2,6 @@ package egovframework.com.cmm;
 
 import java.util.Locale;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
@@ -22,7 +21,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  * </pre>
  */
 
-public class EgovMessageSource extends ReloadableResourceBundleMessageSource implements MessageSource {
+public class EgovMessageSource extends ReloadableResourceBundleMessageSource {
 
 	private ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource;
 

@@ -6,7 +6,7 @@
 ![swagger](https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)  
 ![workflow](https://github.com/eGovFramework/egovframe-template-simple-backend/actions/workflows/maven.yml/badge.svg)
 
-※ 본 프로젝트는 기존 JSP 뷰 방식에서 벗어나 BackEnd와 FrontEnd를 분리하기 위한 예시 파일로 참고만 하시길 바랍니다.  
+※ 본 프로젝트는 기존 JSP 뷰 방식에서 벗어나 BackEnd와 FrontEnd를 분리하기 위한 예시 파일로 참고만 하시길 바랍니다.
 
 ## 환경 설정
 
@@ -31,8 +31,9 @@ mvn spring-boot:run
 ### BackEnd 구동 후 확인
 
 구동 후, 브라우저에서 `http://localhost:포트번호/` 로 확인이 가능하다.  
-초기 포트번호는 8080이며 `/src/main/resources/application.properties` 파일의 `server.port` 항목에서 변경 가능하다.  
+초기 포트번호는 8080이며 `/src/main/resources/application.yml` 파일의 `server.port` 항목에서 변경 가능하다.  
 또한, 스웨거(Swagger)에서 테스트할 때는 아래처럼 사용한다.
+
 - 스웨거3.x에서는 `http://localhost:포트번호/swagger-ui/index.html` 로 애플리케이션의 엔드포인트를 확인 가능하다.
 - 참고로, 예전 스웨거2.x에서는 `http://localhost:포트번호/swagger-ui.html` 로 애플리케이션의 엔드포인트 확인이 가능했다.
 - 스웨거에서 GET방식으로 테스트할 때는 jwt(토큰) 인증 없이 사용 가능하다.
@@ -64,6 +65,7 @@ mvn spring-boot:run
 ※ API를 사용한 Controller들은 ~ApiController.java에서 확인 가능합니다.
 
 ## Jar 실행시
+
 ```bash
 java -jar <jar파일명> --spring.profiles.active=<profile명>
 ```

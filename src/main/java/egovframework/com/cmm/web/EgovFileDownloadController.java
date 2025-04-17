@@ -55,7 +55,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
-@Tag(name="EgovFileDownloadController",description = "파일 다운로드")
+@Tag(name="EgovFileDownload",description = "파일 다운로드")
 public class EgovFileDownloadController {
 
 	@Resource(name = "EgovFileMngService")
@@ -144,7 +144,7 @@ public class EgovFileDownloadController {
 	@Operation(
 			summary = "파일 다운로드",
 			description = "첨부파일로 등록된 파일에 대하여 다운로드를 제공",
-			tags = {"EgovFileDownloadController"}
+			tags = {"EgovFileDownload"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "성공")

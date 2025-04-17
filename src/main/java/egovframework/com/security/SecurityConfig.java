@@ -79,17 +79,26 @@ public class SecurityConfig {
         return new JwtAuthenticationFilter();
     }
 
-
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT","PATCH"));
-        configuration.setAllowedOrigins(Arrays.asList(ORIGINS_WHITELIST));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 개발 환경에서만 사용
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT", "PATCH", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList(
+            "Authorization", 
+            "Cache-Control", 
+            "Content-Type",
+            "Origin",
+            "Accept",
+            "X-Requested-With",
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Headers"
+        ));
         configuration.setAllowCredentials(true);
-
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setMaxAge(3600L);
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -125,7 +134,6 @@ public class SecurityConfig {
     
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize

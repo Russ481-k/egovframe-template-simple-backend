@@ -70,7 +70,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  *  </pre>
  */
 @RestController
-@Tag(name="EgovBBSManageApiController",description = "게시물 관리")
+@Tag(name="EgovBBSManageApi",description = "게시물 관리")
 public class EgovBBSManageApiController {
 	
 	@Autowired
@@ -130,7 +130,7 @@ public class EgovBBSManageApiController {
 	@Operation(
 			summary = "게시판 파일 첨부 관련 정보 조회",
 			description = "게시판의 파일 첨부가능 여부 및 첨부가능 파일 수 조회",
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -175,7 +175,7 @@ public class EgovBBSManageApiController {
 	@Operation(
 			summary = "게시물 목록 조회",
 			description = "게시물에 대한 목록을 조회",
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -242,7 +242,7 @@ public class EgovBBSManageApiController {
 	@Operation(
 			summary = "게시물 상세 조회",
 			description = "게시물에 대한 상세 정보를 조회",
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -331,7 +331,7 @@ public class EgovBBSManageApiController {
 			summary = "게시물 수정",
 			description = "게시물에 대한 내용을 수정",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "수정 성공"),
@@ -411,7 +411,7 @@ public class EgovBBSManageApiController {
 			summary = "게시물 등록",
 			description = "게시물을 등록",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -481,7 +481,7 @@ public class EgovBBSManageApiController {
 			summary = "게시물 답변 등록",
 			description = "게시물에 대한 답변을 등록",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -556,7 +556,7 @@ public class EgovBBSManageApiController {
 			summary = "게시물 삭제",
 			description = "게시물에 대한 내용을 삭제",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSManageApiController"}
+			tags = {"EgovBBSManageApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "삭제 성공"),

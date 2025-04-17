@@ -50,7 +50,7 @@ public class AuthenticInterceptor extends WebContentInterceptor {
     }
 		log.debug("AuthenticInterceptor Fail!!!!!!!!!!!!================== ");
     
-		ModelAndView modelAndView = new ModelAndView("redirect:http://localhost:3000/login");
+		ModelAndView modelAndView = new ModelAndView("redirect:http://localhost:3000/cms/login");
 		throw new ModelAndViewDefiningException(modelAndView);
 	}
 }

@@ -47,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@Tag(name="EgovSiteManagerApiController",description = "사용자 관리")
+@Tag(name="EgovSiteManagerApi",description = "사용자 관리")
 public class EgovSiteManagerApiController {
 	/** EgovSiteManagerService */
 	@Resource(name = "siteManagerService")
@@ -65,7 +65,7 @@ public class EgovSiteManagerApiController {
 			summary = "토큰값 검증",
 			description = "Headers에서 Authorization 속성값에 발급한 토큰값 검증",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovSiteManagerApiController"}
+			tags = {"EgovSiteManagerApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "성공"),
@@ -90,7 +90,7 @@ public class EgovSiteManagerApiController {
 			summary = "비밀번호 변경",
 			description = "사이트관리자의 기존 비번과 비교하여 변경된 비밀번호를 저장",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovSiteManagerApiController"}
+			tags = {"EgovSiteManagerApi"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "성공"),
