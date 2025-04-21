@@ -10,3 +10,6 @@ public class UserRegisterRequest {
     private String phone;
     private String roleType; // USER, SITE_MANAGER, ADMIN
 } 
+ 
+ 
+ 

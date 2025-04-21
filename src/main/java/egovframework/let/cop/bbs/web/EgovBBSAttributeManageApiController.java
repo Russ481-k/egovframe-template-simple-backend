@@ -28,7 +28,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.ResponseCode;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,7 +60,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  *  </pre>
  */
 @RestController
-@Tag(name="EgovBBSAttributeManageApi",description = "게시판 속성관리")
+@Tag(name="cms_04_BBS_Attribute",description = "게시판 속성관리")
 public class EgovBBSAttributeManageApiController {
 
 
@@ -96,7 +96,7 @@ public class EgovBBSAttributeManageApiController {
 			summary = "게시판 마스터 조회",
 			description = "게시판 마스터 목록을 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSAttributeManageApi"}
+			tags = {"cms_04_BBS_Attribute"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -159,7 +159,7 @@ public class EgovBBSAttributeManageApiController {
 			summary = "게시판 마스터 상세 조회",
 			description = "게시판 마스터 상세내용을 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSAttributeManageApi"}
+			tags = {"cms_04_BBS_Attribute"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -201,7 +201,7 @@ public class EgovBBSAttributeManageApiController {
 			summary = "게시판 마스터 등록",
 			description = "신규 게시판 마스터 정보를 등록",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSAttributeManageApi"}
+			tags = {"cms_04_BBS_Attribute"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -270,7 +270,7 @@ public class EgovBBSAttributeManageApiController {
 			summary = "게시판 마스터 수정",
 			description = "게시판 마스터 정보를 수정",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSAttributeManageApi"}
+			tags = {"cms_04_BBS_Attribute"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "수정 성공"),
@@ -325,7 +325,7 @@ public class EgovBBSAttributeManageApiController {
 			summary = "게시판 마스터 삭제",
 			description = "게시판 마스터 정보를 삭제",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSAttributeManageApi"}
+			tags = {"cms_04_BBS_Attribute"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "삭제 성공"),

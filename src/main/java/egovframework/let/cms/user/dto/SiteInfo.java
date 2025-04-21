@@ -10,3 +10,6 @@ public class SiteInfo {
     private String siteUrl;
     private LocalDateTime lastUpdated;
 } 
+ 
+ 
+ 

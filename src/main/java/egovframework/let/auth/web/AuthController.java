@@ -1,9 +1,7 @@
 package egovframework.let.auth.web;
 
 import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.ResponseCode;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.com.jwt.service.JwtTokenProvider;
 import egovframework.let.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,21 +13,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Auth API", description = "인증 관련 API")
+@Tag(name = "cmm_00_Auth", description = "인증 관련 API")
 public class AuthController {
 
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailsService userDetailsService;
 
     @Operation(summary = "일반 로그인", description = "일반 로그인 처리")
     @ApiResponses(value = {
@@ -84,4 +86,38 @@ public class AuthController {
             @Parameter(hidden = true) @AuthenticationPrincipal LoginVO user) {
         return ResponseEntity.ok(authService.changePassword(passwordMap, user));
     }
+
+    @PostMapping("/refresh")
+    @Operation(summary = "토큰 갱신", description = "리프레시 토큰을 사용하여 새로운 액세스 토큰을 발급받습니다.")
+    public ResponseEntity<Map<String, String>> refreshToken(@RequestHeader("Authorization") String refreshToken) {
+        try {
+            String token = refreshToken.substring(7); // "Bearer " 제거
+            if (!jwtTokenProvider.validateToken(token)) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "유효하지 않은 리프레시 토큰입니다.");
+                return ResponseEntity.badRequest().body(error);
+            }
+
+            String username = jwtTokenProvider.getUsernameFromToken(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            String newAccessToken = jwtTokenProvider.createToken(authentication);
+            String newRefreshToken = jwtTokenProvider.createRefreshToken(authentication);
+
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("accessToken", newAccessToken);
+            tokens.put("refreshToken", newRefreshToken);
+
+            return ResponseEntity.ok(tokens);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "토큰 갱신에 실패했습니다.");
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
 } 
+ 
+ 
+ 

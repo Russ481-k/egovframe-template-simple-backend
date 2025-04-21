@@ -12,10 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
 
-@Tag(name = "File API", description = "파일 업로드, 다운로드, 미리보기 API")
+@Tag(name = "cms_00_File", description = "파일 업로드, 다운로드, 미리보기 API")
 @RestController
 @RequestMapping("/api/files")
 @RequiredArgsConstructor
@@ -65,3 +63,6 @@ public class FileController {
         }
     }
 } 
+ 
+ 
+ 

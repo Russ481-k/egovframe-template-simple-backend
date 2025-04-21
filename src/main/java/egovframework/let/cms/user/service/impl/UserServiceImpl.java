@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setStatus(userDto.getStatus());
         
-        Cms05Role role = roleRepository.findByRoleName(userDto.getRoleType())
+        Cms05Role role = roleRepository.findByRoleName(userDto.getRole().getRoleName())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid role type"));
         user.setRole(role);
         
@@ -158,7 +157,7 @@ public class UserServiceImpl implements UserService {
         dto.setEmail(user.getEmail());
         dto.setPhone(user.getPhone());
         dto.setStatus(user.getStatus());
-        dto.setRoleType(user.getRole().getRoleName());
+        dto.setRole(user.getRole());
         return dto;
     }
 } 

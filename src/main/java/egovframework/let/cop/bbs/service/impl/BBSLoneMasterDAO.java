@@ -1,11 +1,9 @@
 package egovframework.let.cop.bbs.service.impl;
+
 import java.util.List;
 
-import egovframework.let.cop.bbs.service.BoardMaster;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,61 +24,54 @@ import org.springframework.stereotype.Repository;
  *  </pre>
  */
 @Repository("BBSLoneMasterDAO")
-public class BBSLoneMasterDAO extends EgovAbstractMapper {
+@Mapper
+public interface BBSLoneMasterDAO {
 
     /**
      * 등록된 게시판 속성정보를 삭제한다.
      *
-     * @param BoardMaster
+     * @param boardMaster
+     * @exception Exception Exception
      */
-    public void deleteMaster(BoardMaster boardMaster) throws Exception {
-    	update("BBSLoneMasterDAO.deleteMaster", boardMaster);
-    }
+    void deleteMaster(BoardMasterVO boardMaster) throws Exception;
 
     /**
-     * 신규 게시판 속성정보를 등록한다.
+     * 신규 게시판 속성정보를 생성한다.
      *
-     * @param BoardMaster
+     * @param boardMaster
+     * @exception Exception Exception
      */
-    public int insertMaster(BoardMaster boardMaster) throws Exception {
-    	return insert("BBSLoneMasterDAO.insertMaster", boardMaster);
-    }
+    void insertMaster(BoardMasterVO boardMaster) throws Exception;
 
     /**
-     * 게시판 속성정보 한 건을 상세조회 한다.
+     * 게시판 속성정보 한 건을 상세조회한다.
      *
-     * @param BoardMasterVO
+     * @param searchVO
+     * @exception Exception Exception
      */
-    public BoardMasterVO selectMaster(BoardMaster vo) throws Exception {
-    	return (BoardMasterVO)selectOne("BBSLoneMasterDAO.selectMaster", vo);
-    }
+    BoardMasterVO selectMaster(BoardMasterVO searchVO) throws Exception;
 
     /**
-     * 게시판 속성정보 목록을 조회한다.
+     * 게시판 속성정보의 목록을 조회한다.
      *
-     * @param BoardMasterVO
+     * @param searchVO
+     * @exception Exception Exception
      */
-    public List<BoardMasterVO> selectMasterList(BoardMasterVO vo) throws Exception {
-		return selectList("BBSLoneMasterDAO.selectMasterList", vo);
-	}
+    List<BoardMasterVO> selectMasterList(BoardMasterVO searchVO) throws Exception;
 
     /**
-     * 게시판 속성정보 목록 숫자를 조회한다
+     * 게시판 속성정보의 목록을 조회한다
      *
-     * @param vo
-     * @return
-     * @throws Exception
+     * @param searchVO
+     * @exception Exception Exception
      */
-    public int selectMasterListCnt(BoardMasterVO vo) throws Exception {
-    	return (Integer)selectOne("BBSLoneMasterDAO.selectMasterListCnt", vo);
-    }
+    int selectMasterListCnt(BoardMasterVO searchVO) throws Exception;
 
     /**
      * 게시판 속성정보를 수정한다.
      *
-     * @param BoardMaster
+     * @param boardMaster
+     * @exception Exception Exception
      */
-    public void updateMaster(BoardMaster boardMaster) throws Exception {
-    	update("BBSLoneMasterDAO.updateMaster", boardMaster);
-    }
+    void updateMaster(BoardMasterVO boardMaster) throws Exception;
 }

@@ -173,3 +173,6 @@ class TemplateControllerTest {
         verify(templateService).applyTemplate(templateId, targetId, targetType);
     }
 } 
+ 
+ 
+ 

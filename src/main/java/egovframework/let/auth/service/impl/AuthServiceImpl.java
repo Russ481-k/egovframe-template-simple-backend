@@ -2,9 +2,8 @@ package egovframework.let.auth.service.impl;
 
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.com.cmm.service.impl.EgovUserDetailsService;
 import egovframework.let.auth.service.AuthService;
-import egovframework.com.jwt.service.JwtTokenProvider;
+import egovframework.let.auth.web.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -76,3 +75,6 @@ public class AuthServiceImpl implements AuthService {
         throw new UnsupportedOperationException("Password change not implemented yet");
     }
 } 
+ 
+ 
+ 

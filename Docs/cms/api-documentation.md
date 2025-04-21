@@ -28,7 +28,13 @@
 ### ApiTags.java
 
 - 인증 관련 API: Authentication
+  - 로그인/로그아웃
+  - 토큰 검증
+  - 비밀번호 변경
 - 사용자 관리 API: User Management
+  - 사용자 CRUD
+  - 사용자 상태 관리
+  - 사이트 관리자 등록
 - 사용자 활동 로그 API: User Activity Log
 - 비밀번호 재설정 API: Password Reset
 
@@ -64,7 +70,30 @@
   - 401: 인증 필요
   - 403: 접근 권한 없음
 
-## 5. 문서화 개선 효과
+## 5. API 엔드포인트 통합
+
+### 인증 관련 API (/api/auth)
+
+- POST /login: 일반 로그인
+- POST /sns/{provider}: SNS 로그인
+- POST /logout: 로그아웃
+- POST /validate: 토큰 검증
+- PATCH /password: 비밀번호 변경
+
+### 사용자 관리 API (/api/v1/users)
+
+- POST /: 사용자 생성
+- PUT /{userId}: 사용자 정보 수정
+- DELETE /{userId}: 사용자 삭제
+- GET /{userId}: 사용자 정보 조회
+- GET /: 사용자 목록 조회
+- POST /{userId}/change-password: 비밀번호 변경
+- PUT /{userId}/status: 사용자 상태 변경
+- POST /register: 사용자 등록
+- POST /site-managers: 사이트 관리자 등록
+- GET /site-info: 사이트 정보 조회
+
+## 6. 문서화 개선 효과
 
 1. **일관성**
 
@@ -85,7 +114,7 @@
    - JWT 인증 관련 문서화 개선
    - 권한 관련 응답 코드 명확화
 
-## 6. 향후 개선 계획
+## 7. 향후 개선 계획
 
 1. **예제 추가**
 

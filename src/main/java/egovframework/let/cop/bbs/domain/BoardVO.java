@@ -1,4 +1,4 @@
-package egovframework.let.cop.bbs.service;
+package egovframework.let.cop.bbs.domain;
 
 import java.io.Serializable;
 
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import egovframework.let.cop.bbs.service.Board;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

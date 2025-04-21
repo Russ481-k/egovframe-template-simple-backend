@@ -7,3 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TemplateRepository extends JpaRepository<Template, Long> {
 } 
+ 
+ 
+ 

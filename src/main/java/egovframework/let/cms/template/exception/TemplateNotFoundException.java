@@ -5,3 +5,6 @@ public class TemplateNotFoundException extends RuntimeException {
         super("Template not found with id: " + templateId);
     }
 } 
+ 
+ 
+ 

@@ -1,7 +1,7 @@
 package egovframework.let.uat.uia.service.impl;
 
 import egovframework.com.cmm.LoginVO;
-import egovframework.com.jwt.service.JwtTokenProvider;
+import egovframework.let.auth.web.JwtTokenProvider;
 import egovframework.let.uat.uia.service.EgovLoginService;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 import lombok.RequiredArgsConstructor;

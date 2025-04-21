@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "UserPasswordReset", description = "비밀번호 재설정 API")
+@Tag(name = "cms_05_User", description = "사용자 관리 API")
 @RestController
-@RequestMapping("/api/password-reset")
+@RequestMapping("/api/v1/users/password-reset")
 public class PasswordResetController {
 
     @Autowired

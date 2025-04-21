@@ -1,9 +1,9 @@
-package egovframework.let.cop.com.service.impl;
+package egovframework.let.cop.bbs.service.impl;
 
 import java.util.List;
 
+import egovframework.let.cop.bbs.domain.BoardUseInfVO;
 import egovframework.let.cop.com.service.BoardUseInf;
-import egovframework.let.cop.com.service.BoardUseInfVO;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 

@@ -18,6 +18,7 @@
 		<typeAlias alias="comDefaultVO"		type="egovframework.com.cmm.ComDefaultVO" />
 		<typeAlias  alias="userSearchVO" type = "egovframework.let.uss.umt.service.UserDefaultVO"/>
     	<typeAlias  alias="mberVO"       type = "egovframework.let.uss.umt.service.MberManageVO"/>
+		<typeAlias alias="boardVO" type="egovframework.let.cop.bbs.domain.BoardVO"/>
 	</typeAliases>
     
 </configuration>

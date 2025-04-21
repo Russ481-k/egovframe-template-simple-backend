@@ -1,6 +1,9 @@
-package egovframework.let.cop.com.service;
+package egovframework.let.cop.bbs.service;
 
 import java.util.Map;
+
+import egovframework.let.cop.bbs.domain.BoardUseInfVO;
+import egovframework.let.cop.com.service.BoardUseInf;
 
 
 /**

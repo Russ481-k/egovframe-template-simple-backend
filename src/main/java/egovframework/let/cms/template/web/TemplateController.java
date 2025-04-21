@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/templates")
 @RequiredArgsConstructor
-@Tag(name = "Template", description = "템플릿 관리 API")
+@Tag(name = "cms_02_Template", description = "템플릿 관리 API")
 public class TemplateController {
 
     private final TemplateService templateService;

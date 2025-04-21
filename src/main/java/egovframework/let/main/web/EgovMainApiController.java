@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.let.cop.bbs.service.BoardVO;
+import egovframework.let.cop.bbs.domain.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,7 +37,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @SessionAttributes(types = ComDefaultVO.class)
-@Tag(name="EgovMainApi",description = "메인 페이지")
+@Tag(name="cmm_00_Main",description = "메인 페이지")
 public class EgovMainApiController {
 
 	/**
@@ -55,7 +55,7 @@ public class EgovMainApiController {
 	@Operation(
 			summary = "메인 페이지",
 			description = "템플릿 메인 페이지 조회",
-			tags = {"EgovMainApi"}
+			tags = {"cmm_00_Main"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공")

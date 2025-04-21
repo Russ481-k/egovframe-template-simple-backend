@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/menus")
 @RequiredArgsConstructor
-@Tag(name = "Menu", description = "메뉴 관리 API")
+@Tag(name = "cms_01_Menu", description = "메뉴 관리 API")
 public class MenuController {
 
     private final MenuService menuService;

@@ -23,3 +23,6 @@ public class Cms05Role {
     @OneToMany(mappedBy = "role")
     private List<Cms05User> users = new ArrayList<>();
 } 
+ 
+ 
+ 

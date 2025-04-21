@@ -1,20 +1,17 @@
 package egovframework.let.cop.bbs.service.impl;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-
-import egovframework.let.cop.bbs.service.BoardMaster;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
-import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
-import egovframework.let.cop.com.service.BoardUseInf;
-import egovframework.let.cop.com.service.impl.BBSUseInfoManageDAO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 
 import javax.annotation.Resource;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
+import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
+import egovframework.let.cop.com.service.BoardUseInf;
 
 /**
  * 게시판 속성관리를 위한 서비스 구현 클래스
@@ -34,7 +31,8 @@ import org.springframework.stereotype.Service;
  *  </pre>
  */
 @Service("EgovBBSLoneMasterService")
-public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implements EgovBBSLoneMasterService {
+@Transactional
+public class EgovBBSLoneMasterServiceImpl implements EgovBBSLoneMasterService {
 
     @Resource(name = "BBSLoneMasterDAO")
     private BBSLoneMasterDAO masterDAO;
@@ -48,7 +46,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
     /**
      * 등록된 게시판 속성정보를 삭제한다.
      */
-    public void deleteMaster(BoardMaster boardMaster) throws Exception {
+    public void deleteMaster(BoardMasterVO boardMaster) throws Exception {
 	masterDAO.deleteMaster(boardMaster);
 	
 	BoardUseInf bdUseInf = new BoardUseInf();
@@ -62,7 +60,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
     /**
      * 신규 게시판 속성정보를 생성한다.
      */
-    public String insertMaster(BoardMaster boardMaster) throws Exception {
+    public String insertMaster(BoardMasterVO boardMaster) throws Exception {
 	String bbsId = idgenService.getNextStringId();
 	
 	boardMaster.setBbsId(bbsId);
@@ -88,29 +86,21 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
     /**
      * 게시판 속성정보 한 건을 상세조회한다.
      */
-    public BoardMasterVO selectMaster(BoardMaster searchVO) throws Exception {
+    public BoardMasterVO selectMaster(BoardMasterVO searchVO) throws Exception {
 	return masterDAO.selectMaster(searchVO);
     }
 
     /**
      * 게시판 속성 정보의 목록을 조회 한다.
      */
-    public Map<String, Object> selectMasterList(BoardMasterVO searchVO) throws Exception {
-	List<BoardMasterVO> result = masterDAO.selectMasterList(searchVO);
-	int cnt = masterDAO.selectMasterListCnt(searchVO);
-	
-	Map<String, Object> map = new HashMap<String, Object>();
-	
-	map.put("resultList", result);
-	map.put("resultCnt", Integer.toString(cnt));
-
-	return map;
+    public List<BoardMasterVO> selectMasterList(BoardMasterVO searchVO) throws Exception {
+	return masterDAO.selectMasterList(searchVO);
     }
 
     /**
      * 게시판 속성정보를 수정한다.
      */
-    public void updateMaster(BoardMaster boardMaster) throws Exception {
+    public void updateMaster(BoardMasterVO boardMaster) throws Exception {
 	masterDAO.updateMaster(boardMaster);
     }
 }

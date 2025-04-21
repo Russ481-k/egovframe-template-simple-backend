@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/contents")
 @RequiredArgsConstructor
-@Tag(name = "Content", description = "콘텐츠 관리 API")
+@Tag(name = "cms_03_Content", description = "컨텐츠 관리 API")
 public class ContentController {
 
     private final ContentService contentService;

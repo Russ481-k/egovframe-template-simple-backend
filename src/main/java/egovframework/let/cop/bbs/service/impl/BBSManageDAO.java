@@ -2,8 +2,8 @@ package egovframework.let.cop.bbs.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import egovframework.let.cop.bbs.service.Board;
-import egovframework.let.cop.bbs.service.BoardVO;
+import egovframework.let.cop.bbs.domain.BoardVO;
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
@@ -35,11 +35,8 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @param board
      * @throws Exception
      */
-    public void insertBoardArticle(Board board) throws Exception {
-	long nttId = (Long)selectOne("BBSManageDAO.selectMaxNttId");
-	board.setNttId(nttId);
-
-	insert("BBSManageDAO.insertBoardArticle", board);
+    public void insertBoardArticle(BoardVO board) throws Exception {
+        insert("BBSManageDAO.insertBoardArticle", board);
     }
 
     /**
@@ -48,25 +45,23 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @param board
      * @throws Exception
      */
-    public long replyBoardArticle(Board board) throws Exception {
-	long nttId = (Long)selectOne("BBSManageDAO.selectMaxNttId");
-	board.setNttId(nttId);
+    public long replyBoardArticle(BoardVO board) throws Exception {
+        long replyAt = (Long)getSqlSession().selectOne("BBSManageDAO.getMaxReplyNo", board);
 
-	insert("BBSManageDAO.replyBoardArticle", board);
+        board.setReplyLc(String.valueOf(replyAt));
 
-	//----------------------------------------------------------
-	// 현재 글 이후 게시물에 대한 NTT_NO를 증가 (정렬을 추가하기 위해)
-	//----------------------------------------------------------
-	//String parentId = board.getParnts();
-	long nttNo = (Long)selectOne("BBSManageDAO.getParentNttNo", board);
+        insert("BBSManageDAO.insertBoardArticle", board);
 
-	board.setNttNo(nttNo);
-	update("BBSManageDAO.updateOtherNttNo", board);
+        //----------------------------------------------------------
+        // 현재 글 이후 게시물에 대한 NTT_NO를 증가 (정렬을 추가하기 위해)
+        //----------------------------------------------------------
+        //String parentId = board.getParnts();
+        long nttNo = (Long)getSqlSession().selectOne("BBSManageDAO.getParentNttNo", board);
 
-	board.setNttNo(nttNo + 1);
-	update("BBSManageDAO.updateNttNo", board);
+        board.setNttNo(nttNo);
+        update("BBSManageDAO.updateOtherNttNo", board);
 
-	return nttId;
+        return replyAt;
     }
 
     /**
@@ -77,7 +72,7 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @throws Exception
      */
     public BoardVO selectBoardArticle(BoardVO boardVO) throws Exception {
-    	return (BoardVO)selectOne("BBSManageDAO.selectBoardArticle", boardVO);
+        return (BoardVO)selectOne("BBSManageDAO.selectBoardArticle", boardVO);
     }
 
     /**
@@ -88,8 +83,8 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @throws Exception
      */
     public List<BoardVO> selectBoardArticleList(BoardVO boardVO) throws Exception {
-		return selectList("BBSManageDAO.selectBoardArticleList", boardVO);
-	}
+        return (List<BoardVO>) list("BBSManageDAO.selectBoardArticleList", boardVO);
+    }
 
     /**
      * 조건에 맞는 게시물 목록에 대한 전체 건수를 조회 한다.
@@ -99,7 +94,7 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @throws Exception
      */
     public int selectBoardArticleListCnt(BoardVO boardVO) throws Exception {
-    	return (Integer)selectOne("BBSManageDAO.selectBoardArticleListCnt", boardVO);
+        return (Integer)selectOne("BBSManageDAO.selectBoardArticleListCnt", boardVO);
     }
 
     /**
@@ -108,8 +103,8 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @param board
      * @throws Exception
      */
-    public void updateBoardArticle(Board board) throws Exception {
-    	update("BBSManageDAO.updateBoardArticle", board);
+    public void updateBoardArticle(BoardVO board) throws Exception {
+        update("BBSManageDAO.updateBoardArticle", board);
     }
 
     /**
@@ -118,8 +113,8 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @param board
      * @throws Exception
      */
-    public void deleteBoardArticle(Board board) throws Exception {
-    	update("BBSManageDAO.deleteBoardArticle", board);
+    public void deleteBoardArticle(BoardVO board) throws Exception {
+        update("BBSManageDAO.deleteBoardArticle", board);
     }
 
     /**
@@ -128,98 +123,104 @@ public class BBSManageDAO extends EgovAbstractMapper {
      * @param board
      * @throws Exception
      */
-    public void updateInqireCo(BoardVO boardVO) throws Exception {
-    	update("BBSManageDAO.updateInqireCo", boardVO);
+    public void updateInqireCo(BoardVO board) throws Exception {
+        update("BBSManageDAO.updateInqireCo", board);
     }
 
     /**
      * 게시물에 대한 현재 조회 건수를 조회 한다.
      *
-     * @param boardVO
+     * @param board
      * @return
      * @throws Exception
      */
-    public int selectMaxInqireCo(BoardVO boardVO) throws Exception {
-    	return (Integer)selectOne("BBSManageDAO.selectMaxInqireCo", boardVO);
+    public int selectMaxInqireCo(BoardVO board) throws Exception {
+        return (Integer)selectOne("BBSManageDAO.selectMaxInqireCo", board);
     }
 
     /**
-     * 게시판에 대한 목록을 정렬 순서로 조회 한다.
-     *
-     * @param boardVO
-     * @return
-     * @throws Exception
-     */
-    public List<BoardVO> selectNoticeListForSort(Board board) throws Exception {
-		return selectList("BBSManageDAO.selectNoticeListForSort", board);
-	}
-
-    /**
-     * 게사판에 대한 정렬 순서를 수정 한다.
-     *
-     * @param sortList
-     * @throws Exception
-     */
-    public void updateSortOrder(List<BoardVO> sortList) throws Exception {
-	BoardVO vo;
-	Iterator<BoardVO> iter = sortList.iterator();
-	while (iter.hasNext()) {
-	    vo = iter.next();
-	    update("BBSManageDAO.updateSortOrder", vo);
-	}
-    }
-
-    /**
-     * 게시판에 대한 현재 게시물 번호의 최대값을 구한다.
-     *
-     * @param boardVO
-     * @return
-     * @throws Exception
-     */
-    public long selectNoticeItemForSort(Board board) throws Exception {
-    	return (Long)selectOne("BBSManageDAO.selectNoticeItemForSort", board);
-    }
-
-    /**
-     * 방명록에 대한 목록을 조회 한다.
-     *
-     * @param boardVO
-     * @return
-     * @throws Exception
-     */
-    public List<BoardVO> selectGuestList(BoardVO boardVO) throws Exception {
-		return selectList("BBSManageDAO.selectGuestList", boardVO);
-	}
-
-    /**
-     * 방명록에 대한 목록 건수를 조회 한다.
-     *
-     * @param boardVO
-     * @return
-     * @throws Exception
-     */
-    public int selectGuestListCnt(BoardVO boardVO) throws Exception {
-    	return (Integer)selectOne("BBSManageDAO.selectGuestListCnt", boardVO);
-    }
-
-    /**
-     * 방명록 내용을 삭제 한다.
-     *
-     * @param boardVO
-     * @throws Exception
-     */
-    public void deleteGuestList(BoardVO boardVO) throws Exception {
-    	update("BBSManageDAO.deleteGuestList", boardVO);
-    }
-
-    /**
-     * 방명록에 대한 패스워드를 조회 한다.
+     * 게시판에 대한 목록을 조회 한다.
      *
      * @param board
      * @return
      * @throws Exception
      */
-    public String getPasswordInf(Board board) throws Exception {
-    	return (String)selectOne("BBSManageDAO.getPasswordInf", board);
+    public List<BoardVO> selectNoticeList(BoardVO board) throws Exception {
+        return (List<BoardVO>) list("BBSManageDAO.selectNoticeList", board);
+    }
+
+    /**
+     * 게시판에 대한 목록 총 갯수를 조회 한다.
+     *
+     * @param board
+     * @return
+     * @throws Exception
+     */
+    public int selectNoticeListCnt(BoardVO board) throws Exception {
+        return (Integer)selectOne("BBSManageDAO.selectNoticeListCnt", board);
+    }
+
+    /**
+     * 게시물 한 건에 대하여 상세 내용을 조회 한다.
+     *
+     * @param boardVO
+     * @return
+     * @throws Exception
+     */
+    public BoardVO selectNoticeDetail(BoardVO boardVO) throws Exception {
+        return (BoardVO)selectOne("BBSManageDAO.selectNoticeDetail", boardVO);
+    }
+
+    /**
+     * 게시물에 대한 조회 건수를 수정 한다.
+     *
+     * @param board
+     * @throws Exception
+     */
+    public void updateNoticeInqireCo(BoardVO board) throws Exception {
+        update("BBSManageDAO.updateNoticeInqireCo", board);
+    }
+
+    /**
+     * 방명록에 대한 목록을 조회 한다.
+     *
+     * @param board
+     * @return
+     * @throws Exception
+     */
+    public List<BoardVO> selectGuestList(BoardVO board) throws Exception {
+        return (List<BoardVO>) list("BBSManageDAO.selectGuestList", board);
+    }
+
+    /**
+     * 방명록에 대한 목록 총 갯수를 조회 한다.
+     *
+     * @param board
+     * @return
+     * @throws Exception
+     */
+    public int selectGuestListCnt(BoardVO board) throws Exception {
+        return (Integer)selectOne("BBSManageDAO.selectGuestListCnt", board);
+    }
+
+    /**
+     * 방명록을 삭제한다.
+     *
+     * @param board
+     * @throws Exception
+     */
+    public void deleteGuestList(BoardVO board) throws Exception {
+        update("BBSManageDAO.deleteGuestList", board);
+    }
+
+    /**
+     * 게시물에 대한 패스워드를 조회 한다.
+     *
+     * @param board
+     * @return
+     * @throws Exception
+     */
+    public String getPasswordInf(BoardVO board) throws Exception {
+        return (String)selectOne("BBSManageDAO.getPasswordInf", board);
     }
 }

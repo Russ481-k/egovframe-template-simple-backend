@@ -24,10 +24,11 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.ResponseCode;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
-import egovframework.let.cop.com.service.BoardUseInfVO;
-import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
+import egovframework.let.cop.bbs.domain.BoardUseInfVO;
+import egovframework.let.cop.com.service.BoardUseInf;
+import egovframework.let.cop.bbs.service.EgovBBSUseInfoManageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.Explode;
@@ -57,7 +58,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * </pre>
  */
 @RestController
-@Tag(name="EgovBBSUseInfoManageApi",description = "게시판 이용정보 관리")
+@Tag(name="cms_04_BBS_Use_Info",description = "게시판 이용정보 관리")
 public class EgovBBSUseInfoManageApiController {
 	
 
@@ -93,7 +94,7 @@ public class EgovBBSUseInfoManageApiController {
 			summary = "게시판 사용정보 목록 조회",
 			description = "게시판 사용정보 목록을 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSUseInfoManageApi"}
+			tags = {"cms_04_BBS_Use_Info"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -154,7 +155,7 @@ public class EgovBBSUseInfoManageApiController {
 			summary = "미사용 게시판 속성정보 목록 조회",
 			description = "사용중이지 않은 게시판 속성 정보의 목록을 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSUseInfoManageApi"}
+			tags = {"cms_04_BBS_Use_Info"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공")
@@ -187,7 +188,7 @@ public class EgovBBSUseInfoManageApiController {
 			summary = "게시판 사용정보 상세 조회",
 			description = "게시판 사용정보에 대한 상세정보를 조회",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSUseInfoManageApi"}
+			tags = {"cms_04_BBS_Use_Info"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -243,7 +244,7 @@ public class EgovBBSUseInfoManageApiController {
 			summary = "게시판 사용정보 등록",
 			description = " 게시판 사용정보를 등록",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSUseInfoManageApi"}
+			tags = {"cms_04_BBS_Use_Info"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -299,7 +300,7 @@ public class EgovBBSUseInfoManageApiController {
 			summary = "게시판 사용정보 수정",
 			description = " 게시판 사용정보를 수정",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovBBSUseInfoManageApi"}
+			tags = {"cms_04_BBS_Use_Info"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "수정 성공"),

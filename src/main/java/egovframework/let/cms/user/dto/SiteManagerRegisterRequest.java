@@ -12,3 +12,6 @@ public class SiteManagerRegisterRequest {
     private String siteDescription;
     private String siteUrl;
 } 
+ 
+ 
+ 

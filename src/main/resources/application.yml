@@ -135,8 +135,10 @@ Sns:
     callbackUrl: ${SNS_KAKAO_CALLBACK_URL:http://localhost:3000/login/kakao/callback}
 
 jwt:
-  secret: ${JWT_SECRET:your-256-bit-secret-key-here-must-be-at-least-256-bits-long}
-  expiration: ${JWT_EXPIRATION:3600000}
-  refresh-expiration: ${JWT_REFRESH_EXPIRATION:86400000}
+  secret: ${JWT_SECRET:your-secret-key}
+  access-token:
+    validity-in-milliseconds: 3600000 # 1시간
+  refresh-token:
+    validity-in-milliseconds: 604800000 # 7일
   header: ${JWT_HEADER:Authorization}
   prefix: ${JWT_PREFIX:Bearer}

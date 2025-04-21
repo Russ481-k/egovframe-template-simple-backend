@@ -9,11 +9,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
-import egovframework.let.cop.bbs.service.Board;
-import egovframework.let.cop.bbs.service.BoardVO;
+import egovframework.let.cop.bbs.domain.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import egovframework.let.utl.fcc.service.EgovDateUtil;
 
@@ -38,6 +38,7 @@ import org.egovframe.rte.fdl.property.EgovPropertyService;
  *  </pre>
  */
 @Service("EgovBBSManageService")
+@Primary
 public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements EgovBBSManageService {
 
 	@Resource(name = "BBSManageDAO")
@@ -51,11 +52,9 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시물 한 건을 삭제 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
-	public void deleteBoardArticle(Board board) throws Exception {
+	public void deleteBoardArticle(BoardVO board) throws Exception {
 		FileVO fvo = new FileVO();
 
 		fvo.setAtchFileId(board.getAtchFileId());
@@ -71,11 +70,9 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시판에 게시물 또는 답변 게시물을 등록 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#insertBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
-	public void insertBoardArticle(Board board) throws Exception {
+	public void insertBoardArticle(BoardVO board) throws Exception {
 		// SORT_ORDR는 부모글의 소트 오더와 같게, NTT_NO는 순서대로 부여
 
 		if ("Y".equals(board.getReplyAt())) {
@@ -98,8 +95,6 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시물 대하여 상세 내용을 조회 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticle(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public BoardVO selectBoardArticle(BoardVO boardVO) throws Exception {
@@ -115,8 +110,6 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 조건에 맞는 게시물 목록을 조회 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticles(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public Map<String, Object> selectBoardArticles(BoardVO boardVO, String attrbFlag) throws Exception {
@@ -157,18 +150,14 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시물 한 건의 내용을 수정 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#updateBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
-	public void updateBoardArticle(Board board) throws Exception {
+	public void updateBoardArticle(BoardVO board) throws Exception {
 		bbsMngDAO.updateBoardArticle(board);
 	}
 
 	/**
 	 * 방명록 내용을 삭제 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public void deleteGuestList(BoardVO boardVO) throws Exception {
@@ -177,8 +166,6 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 방명록에 대한 목록을 조회 한다.
-	 *
-	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public Map<String, Object> selectGuestList(BoardVO boardVO) throws Exception {
@@ -195,13 +182,9 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 방명록에 대한 패스워드를 조회 한다.
-	 *
-	 * @param board
-	 * @return
-	 * @throws Exception
 	 */
 	@Override
-	public String getPasswordInf(Board board) throws Exception {
+	public String getPasswordInf(BoardVO board) throws Exception {
 		return bbsMngDAO.getPasswordInf(board);
 	}
 }

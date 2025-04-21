@@ -1,4 +1,4 @@
-package egovframework.let.cop.com.service;
+package egovframework.let.cop.bbs.domain;
 
 import java.io.Serializable;
 
@@ -63,12 +63,10 @@ public class BoardUseInf implements Serializable {
 	@Schema(description = "최종 수정 시점")
     private String lastUpdtPnttm = "";
 
-
-    
     /**
      * toString 메소드를 대치한다.
      */
     public String toString() {
 	return ToStringBuilder.reflectionToString(this);
     }
-}
+} 

@@ -66,7 +66,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @created 09-6-2011 오전 10:08:04
  */
 @RestController
-@Tag(name="EgovIndvdlSchdulManageApi",description = "일정관리")
+@Tag(name="cmm_02_Schdule_Manage",description = "일정관리")
 public class EgovIndvdlSchdulManageApiController {
 
 	@Autowired
@@ -107,7 +107,7 @@ public class EgovIndvdlSchdulManageApiController {
     @Operation(
 			summary = "월별 일정 조회",
 			description = "일정(월별) 목록을 조회",
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -191,7 +191,7 @@ public class EgovIndvdlSchdulManageApiController {
 			summary = "일정 등록",
 			description = "일정을 등록 처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -258,7 +258,7 @@ public class EgovIndvdlSchdulManageApiController {
     @Operation(
 			summary = "일정 상세조회",
 			description = "일정 목록을 상세조회",
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공")
@@ -336,7 +336,7 @@ public class EgovIndvdlSchdulManageApiController {
 			summary = "일정 삭제",
 			description = "일정을 삭제 처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -375,7 +375,7 @@ public class EgovIndvdlSchdulManageApiController {
 			summary = "일정 수정",
 			description = "일정을 수정 처리",
 			security = {@SecurityRequirement(name = "Authorization")},
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -461,7 +461,7 @@ public class EgovIndvdlSchdulManageApiController {
     @Operation(
 			summary = "일별 일정 조회",
 			description = "일정(일별) 목록을 조회",
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -541,7 +541,7 @@ public class EgovIndvdlSchdulManageApiController {
     @Operation(
 			summary = "주간별 일정 조회",
 			description = "일정(주간별) 목록을 조회",
-			tags = {"EgovIndvdlSchdulManageApi"}
+			tags = {"cmm_02_Schdule_Manage"}
 	)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "조회 성공"),

@@ -4,7 +4,7 @@
 <mapper namespace="EgovUserInfManageDAO">
 
 
-	<resultMap id="UserInfs" type="egovframework.let.cop.com.service.UserInfVO">
+	<resultMap id="UserInfs" type="egovframework.let.cop.com.domain.UserInfVO">
 		<result property="uniqId" column="ESNTL_ID"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userNm" column="USER_NM"/>
@@ -13,7 +13,7 @@
 		<result property="userEmail" column="USER_EMAIL"/>
 	</resultMap>
 	
-	<resultMap id="UserInfList" type="egovframework.let.cop.com.service.UserInfVO">
+	<resultMap id="UserInfList" type="egovframework.let.cop.com.domain.UserInfVO">
 		<result property="uniqId" column="ESNTL_ID"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userNm" column="USER_NM"/>
@@ -24,12 +24,12 @@
 		<result property="deletedAt" column="DELETED_AT"/>
 	</resultMap>
 	
-	<resultMap id="AllUserInfList" type="egovframework.let.cop.com.service.UserInfVO">
+	<resultMap id="AllUserInfList" type="egovframework.let.cop.com.domain.UserInfVO">
 		<result property="uniqId" column="ESNTL_ID"/>
 		<result property="trgetId" column="TRGET_ID"/>
 	</resultMap>	
 
- 	<select id="selectUserList" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="UserInfs">
+ 	<select id="selectUserList" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="UserInfs">
  		
  		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 			SELECT 
@@ -47,7 +47,7 @@
 							
  	</select>
  	
-	<select id="selectUserListCnt" parameterType="egovframework.let.cop.com.service.UserInfVO" resultType="java.lang.Integer">
+	<select id="selectUserListCnt" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultType="java.lang.Integer">
 		
 			SELECT 
 				COUNT(ESNTL_ID)
@@ -60,7 +60,7 @@
 			</if>		
 	</select>	
  
-	<select id="selectCmmntyUserList" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="UserInfList">
+	<select id="selectCmmntyUserList" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="UserInfList">
  		
  		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 			SELECT 
@@ -82,7 +82,7 @@
 						
  	</select>
  	
-	<select id="selectCmmntyUserListCnt" parameterType="egovframework.let.cop.com.service.UserInfVO" resultType="java.lang.Integer">
+	<select id="selectCmmntyUserListCnt" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultType="java.lang.Integer">
 		
 			SELECT 
 				COUNT(a.ESNTL_ID)
@@ -99,7 +99,7 @@
 	</select>
  
 
-	<select id="selectCmmntyMngrList" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="UserInfList">
+	<select id="selectCmmntyMngrList" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="UserInfList">
  		
  		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 			SELECT 
@@ -123,7 +123,7 @@
 						
  	</select>
  	
-	<select id="selectCmmntyMngrListCnt" parameterType="egovframework.let.cop.com.service.UserInfVO" resultType="java.lang.Integer">
+	<select id="selectCmmntyMngrListCnt" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultType="java.lang.Integer">
 		
 			SELECT 
 				COUNT(a.ESNTL_ID)
@@ -142,7 +142,7 @@
 	</select>
 	
 
-	<select id="selectClubUserList" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="UserInfList">
+	<select id="selectClubUserList" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="UserInfList">
  		
  		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 			SELECT 
@@ -164,7 +164,7 @@
 						
  	</select>
  	
-	<select id="selectClubUserListCnt" parameterType="egovframework.let.cop.com.service.UserInfVO" resultType="java.lang.Integer">
+	<select id="selectClubUserListCnt" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultType="java.lang.Integer">
 		
 			SELECT 
 				COUNT(a.ESNTL_ID)
@@ -180,7 +180,7 @@
 			</if>		
 	</select>
 
-	<select id="selectClubOprtrList" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="UserInfList">
+	<select id="selectClubOprtrList" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="UserInfList">
  		
  		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 			SELECT 
@@ -204,7 +204,7 @@
 						
  	</select>
  	
-	<select id="selectClubOprtrListCnt" parameterType="egovframework.let.cop.com.service.UserInfVO" resultType="java.lang.Integer">
+	<select id="selectClubOprtrListCnt" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultType="java.lang.Integer">
 		
 			SELECT 
 				COUNT(a.ESNTL_ID)
@@ -222,7 +222,7 @@
 			</if>		
 	</select>
 
-	<select id="selectAllClubUser" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="AllUserInfList">
+	<select id="selectAllClubUser" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="AllUserInfList">
 		
 			SELECT EMPLYR_ID as ESNTL_ID, CLB_ID as TRGET_ID 
 			FROM LETTNCLUBUSER WHERE USE_AT = 'Y'
@@ -230,7 +230,7 @@
 		
 	</select>
 	
-	<select id="selectAllCmmntyUser" parameterType="egovframework.let.cop.com.service.UserInfVO" resultMap="AllUserInfList">
+	<select id="selectAllCmmntyUser" parameterType="egovframework.let.cop.com.domain.UserInfVO" resultMap="AllUserInfList">
 		
 			SELECT EMPLYR_ID as ESNTL_ID, CMMNTY_ID as TRGET_ID 
 			FROM LETTNCMMNTYUSER WHERE USE_AT = 'Y'

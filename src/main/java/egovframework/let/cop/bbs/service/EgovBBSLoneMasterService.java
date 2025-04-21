@@ -1,6 +1,8 @@
 package egovframework.let.cop.bbs.service;
 
-import java.util.Map;
+import java.util.List;
+
+import egovframework.let.cop.bbs.domain.BoardMasterVO;
 
 /**
  * 게시판 속성관리를 위한 서비스 인터페이스 클래스
@@ -23,52 +25,47 @@ public interface EgovBBSLoneMasterService {
 
 	/**
 	 * 등록된 게시판 속성정보를 삭제한다.
-	 * @param BoardMaster
+	 * @param boardMaster
 	 * 
 	 * @param boardMaster
 	 * @exception Exception Exception
 	 */
-	public void deleteMaster(BoardMaster boardMaster)
-	  throws Exception;
+	void deleteMaster(BoardMasterVO boardMaster) throws Exception;
 
 	/**
 	 * 신규 게시판 속성정보를 생성한다.
-	 * @param BoardMaster
+	 * @param boardMaster
 	 * 
 	 * @param boardMaster
 	 * @exception Exception Exception
 	 */
-	public String insertMaster(BoardMaster boardMaster)
-	  throws Exception;
+	String insertMaster(BoardMasterVO boardMaster) throws Exception;
 
 	/**
 	 * 게시판 속성정보 한 건을 상세조회한다.
-	 * @param BoardMasterVO
+	 * @param searchVO
 	 * 
 	 * @param searchVO
 	 * @exception Exception Exception
 	 */
-	public BoardMasterVO selectMaster(BoardMaster searchVO)
-	  throws Exception;
+	BoardMasterVO selectMaster(BoardMasterVO searchVO) throws Exception;
 
 	/**
 	 * 게시판 속성 정보의 목록을 조회 한다.
-	 * @param BoardMasterVO
+	 * @param searchVO
 	 * 
 	 * @param searchVO
 	 * @exception Exception Exception
 	 */
-	public Map<String, Object> selectMasterList(BoardMasterVO searchVO)
-	  throws Exception;
+	List<BoardMasterVO> selectMasterList(BoardMasterVO searchVO) throws Exception;
 
 	/**
 	 * 게시판 속성정보를 수정한다.
-	 * @param BoardMaster
+	 * @param boardMaster
 	 * 
 	 * @param boardMaster
 	 * @exception Exception Exception
 	 */
-	public void updateMaster(BoardMaster boardMaster)
-	  throws Exception;
+	void updateMaster(BoardMasterVO boardMaster) throws Exception;
 
 }
