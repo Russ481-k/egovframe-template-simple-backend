@@ -36,7 +36,7 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.com.cmm.web.EgovFileDownloadController;
+import egovframework.com.cmm.util.FileEncryptionConstants;
 import egovframework.let.cop.smt.sim.service.EgovIndvdlSchdulManageService;
 import egovframework.let.cop.smt.sim.service.IndvdlSchdulManageVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -310,8 +310,8 @@ public class EgovIndvdlSchdulManageApiController {
 			
 			// FileId를 유추하지 못하도록 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 			for (FileVO file : resultFiles) {
-				String toEncrypt = file.atchFileId;
-				file.setAtchFileId(Base64.getEncoder().encodeToString(cryptoService.encrypt(toEncrypt.getBytes(),EgovFileDownloadController.ALGORITM_KEY)));
+				String toEncrypt = file.getAtchFileId();
+				file.setAtchFileId(Base64.getEncoder().encodeToString(cryptoService.encrypt(toEncrypt.getBytes(),FileEncryptionConstants.ALGORITM_KEY)));
 			}
 						
 			resultMap.put("resultFiles", resultFiles);

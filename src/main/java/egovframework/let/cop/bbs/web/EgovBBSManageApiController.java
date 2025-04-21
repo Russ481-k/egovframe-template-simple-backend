@@ -32,13 +32,12 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.com.cmm.service.ResultVO;
-import egovframework.com.cmm.web.EgovFileDownloadController;
-import egovframework.com.jwt.EgovJwtTokenUtil;
+import egovframework.com.cmm.util.FileEncryptionConstants;
+import egovframework.com.jwt.service.JwtTokenProvider;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
-import egovframework.let.utl.fcc.service.EgovStringUtil;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,7 +73,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class EgovBBSManageApiController {
 	
 	@Autowired
-    private EgovJwtTokenUtil jwtTokenUtil;
+    private JwtTokenProvider jwtTokenProvider;
     public static final String HEADER_STRING = "Authorization";
     
 	@Resource(name = "EgovBBSManageService")
@@ -304,8 +303,8 @@ public class EgovBBSManageApiController {
 			
 			// FileId를 유추하지 못하도록 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 			for (FileVO file : resultFiles) {
-				String toEncrypt = file.atchFileId;
-				file.setAtchFileId(Base64.getEncoder().encodeToString(cryptoService.encrypt(toEncrypt.getBytes(),EgovFileDownloadController.ALGORITM_KEY)));
+				String toEncrypt = file.getAtchFileId();
+				file.setAtchFileId(Base64.getEncoder().encodeToString(cryptoService.encrypt(toEncrypt.getBytes(),FileEncryptionConstants.ALGORITM_KEY)));
 			}
 						
 			resultMap.put("resultFiles", resultFiles);
@@ -341,21 +340,18 @@ public class EgovBBSManageApiController {
 	@PutMapping(value ="/board/{nttId}")
 	public ResultVO updateBoardArticle(final MultipartHttpServletRequest multiRequest,
 		BoardVO boardVO,
-		@Parameter(name = "nttId", description = "게시글 Id", in = ParameterIn.PATH, example="1")
 		@PathVariable("nttId") String nttId,
 		BindingResult bindingResult,
 		HttpServletRequest request)
 		throws Exception {
 		ResultVO resultVO = new ResultVO();
 
-		// step 1. request header에서 토큰을 가져온다.
-		String jwtToken = EgovStringUtil.isNullToString(request.getHeader(HEADER_STRING));
-        // step 2. 토큰에 내용이 있는지 확인해서 id값을 가져옴
-		String uniqId = jwtTokenUtil.getInfoFromToken("uniqId",jwtToken);
-		String userNm = jwtTokenUtil.getInfoFromToken("name",jwtToken);
-		// 사용자권한 처리
+		String token = jwtTokenProvider.resolveToken(request);
+		String uniqId = jwtTokenProvider.getUsernameFromToken(token);
+		String userNm = jwtTokenProvider.getInfoFromToken("name", token);
+		
 		LoginVO user = new LoginVO();
-		user.setUniqId(uniqId); //고정값(USRCNFRM_00000000000)에서 로그인 시 사용자 고유ID값으로 변경
+		user.setUniqId(uniqId);
 
 		String atchFileId = boardVO.getAtchFileId().replaceAll("\\s", "");
 
@@ -426,14 +422,12 @@ public class EgovBBSManageApiController {
 		throws Exception {
 		ResultVO resultVO = new ResultVO();
 
-		// step 1. request header에서 토큰을 가져온다.
-		String jwtToken = EgovStringUtil.isNullToString(request.getHeader(HEADER_STRING));
-        // step 2. 토큰에 내용이 있는지 확인해서 id값을 가져옴
-		String uniqId = jwtTokenUtil.getInfoFromToken("uniqId",jwtToken);
-		String userNm = jwtTokenUtil.getInfoFromToken("name",jwtToken);
-		// 사용자권한 처리
+		String token = jwtTokenProvider.resolveToken(request);
+		String uniqId = jwtTokenProvider.getUsernameFromToken(token);
+		String userNm = jwtTokenProvider.getInfoFromToken("name", token);
+		
 		LoginVO user = new LoginVO();
-		user.setUniqId(uniqId); //고정값(USRCNFRM_00000000000)에서 로그인 시 사용자 고유ID값으로 변경
+		user.setUniqId(uniqId);
 
 		beanValidator.validate(boardVO, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -496,14 +490,12 @@ public class EgovBBSManageApiController {
 		throws Exception {
 		ResultVO resultVO = new ResultVO();
 
-		// step 1. request header에서 토큰을 가져온다.
-		String jwtToken = EgovStringUtil.isNullToString(request.getHeader(HEADER_STRING));
-        // step 2. 토큰에 내용이 있는지 확인해서 id값을 가져옴
-		String uniqId = jwtTokenUtil.getInfoFromToken("uniqId",jwtToken);
-		String userNm = jwtTokenUtil.getInfoFromToken("name",jwtToken);
-		// 사용자권한 처리
+		String token = jwtTokenProvider.resolveToken(request);
+		String uniqId = jwtTokenProvider.getUsernameFromToken(token);
+		String userNm = jwtTokenProvider.getInfoFromToken("name", token);
+		
 		LoginVO user = new LoginVO();
-		user.setUniqId(uniqId); //고정값(USRCNFRM_00000000000)에서 로그인 시 사용자 고유ID값으로 변경
+		user.setUniqId(uniqId);
 
 		beanValidator.validate(boardVO, bindingResult);
 		if (bindingResult.hasErrors()) {

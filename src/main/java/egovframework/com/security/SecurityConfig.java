@@ -1,27 +1,27 @@
 package egovframework.com.security;
 
-import egovframework.com.cmm.filter.HTMLTagFilter;
 import egovframework.com.jwt.JwtAuthenticationEntryPoint;
-import egovframework.com.jwt.JwtAuthenticationFilter;
-
+import egovframework.com.jwt.JwtRequestFilter;
+import egovframework.let.cms.security.service.CmsUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 import java.util.Arrays;
 
@@ -39,120 +39,87 @@ import javax.servlet.MultipartConfigElement;
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 	
-	 //Http Methpd : Get 인증예외 List
-    private String[] AUTH_GET_WHITELIST = {
-    		"/mainPage", //메인 화면 리스트 조회
-    		"/board", // 게시판 목록조회
-    		"/board/{bbsId}/{nttId}", // 게시물 상세조회
-    		"/boardFileAtch/{bbsId}", //게시판 파일 첨부가능 여부 조회
-            "/schedule/daily", //일별 일정 조회
-            "/schedule/week", //주간 일정 조회
-            "/schedule/{schdulId}", //일정 상세조회
-            "/image", //갤러리 이미지보기
-    };
+	private final CmsUserDetailsService userDetailsService;
+	private final JwtRequestFilter jwtRequestFilter;
+	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    // 인증 예외 List
-    private String[] AUTH_WHITELIST = {
-    		"/",
-            "/login/**",
-            "/auth/login-jwt",//JWT 로그인
-            "/auth/login",//일반 로그인
-            "/file", //파일 다운로드
-            "/etc/**",//사용자단의 회원약관,회원가입,사용자아이디 중복여부체크 URL허용
-            
-            /* swagger*/
-            "/v3/api-docs/**",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
-            
-    };
-    private static final String[] ORIGINS_WHITELIST = {
-            "http://localhost:3000",
-    };
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+			.cors().configurationSource(corsConfigurationSource())
+			.and()
+			.csrf().disable()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.authorizeHttpRequests()
+				.antMatchers(
+					"/login/**",
+					"/swagger-ui/**",
+					"/v3/api-docs/**",
+					"/swagger-resources/**",
+					"/webjars/**",
+					"/api/v1/v3/api-docs/**"
+				).permitAll()
+				.anyRequest().authenticated()
+			.and()
+			.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+			.exceptionHandling()
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+		return http.build();
+	}
 
-    @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationFilter();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
-    @Bean
-    protected CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 개발 환경에서만 사용
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT", "PATCH", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList(
-            "Authorization", 
-            "Cache-Control", 
-            "Content-Type",
-            "Origin",
-            "Accept",
-            "X-Requested-With",
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers"
-        ));
-        configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        configuration.setMaxAge(3600L);
-        
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-    
-    @Bean
-    public CharacterEncodingFilter characterEncodingFilter() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-        return characterEncodingFilter;
-    }
-    
-    @Bean
-    public HTMLTagFilter htmlTagFilter() {
-        return new HTMLTagFilter();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    //멀티파트 필터 빈	
-    @Bean
-    public MultipartFilter multipartFilter() {
-        return new MultipartFilter();
-    }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
 
-    //서블릿 컨테이너에 멀티파트 구성을 제공하기 위한 설정    
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
-        factory.setMaxFileSize(DataSize.ofMegabytes(100L));
-        return factory.createMultipartConfig();
-    }
-    
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize
-                		.antMatchers("/members/**").hasRole("ADMIN") //ROLE_생략=자동으로 입력됨
-                        .antMatchers(AUTH_WHITELIST).permitAll()
-                        .antMatchers(HttpMethod.GET,AUTH_GET_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
-                ).sessionManagement((sessionManagement) ->
-                    sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .cors().and()
-                .addFilterBefore(characterEncodingFilter(), ChannelProcessingFilter.class)
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(multipartFilter(), CsrfFilter.class)
-                .exceptionHandling(exceptionHandlingConfigurer ->
-                        exceptionHandlingConfigurer
-                                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
-                )
-                .build();
-    }
+	@Bean
+	protected CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		
+		configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 개발 환경에서만 사용
+		configuration.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT", "PATCH", "OPTIONS"));
+		configuration.setAllowedHeaders(Arrays.asList(
+			"Authorization", 
+			"Cache-Control", 
+			"Content-Type",
+			"Origin",
+			"Accept",
+			"X-Requested-With",
+			"Access-Control-Request-Method",
+			"Access-Control-Request-Headers"
+		));
+		configuration.setAllowCredentials(true);
+		configuration.setExposedHeaders(Arrays.asList("Authorization"));
+		configuration.setMaxAge(3600L);
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setMaxFileSize(DataSize.ofMegabytes(10));
+		factory.setMaxRequestSize(DataSize.ofMegabytes(10));
+		return factory.createMultipartConfig();
+	}
 }

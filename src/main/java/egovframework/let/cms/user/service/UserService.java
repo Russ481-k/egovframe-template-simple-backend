@@ -1,30 +1,24 @@
 package egovframework.let.cms.user.service;
 
-import egovframework.let.cms.user.domain.User;
+import egovframework.let.cms.user.domain.Cms05User;
+import egovframework.let.cms.user.dto.SiteInfo;
+import egovframework.let.cms.user.dto.SiteManagerRegisterRequest;
+import egovframework.let.cms.user.dto.UserDto;
+import egovframework.let.cms.user.dto.UserRegisterRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 public interface UserService {
-    
-    User createUser(User user);
-    
-    User updateUser(User user);
-    
+    UserDto createUser(UserDto userDto);
+    UserDto updateUser(UserDto userDto);
     void deleteUser(String userId);
-    
-    Optional<User> getUserById(String userId);
-    
-    Optional<User> getUserByUsername(String username);
-    
-    Page<User> getUsers(Pageable pageable);
-    
-    boolean existsByUsername(String username);
-    
-    boolean existsByEmail(String email);
-    
-    User changePassword(String userId, String newPassword);
-    
-    User updateStatus(String userId, String status);
+    Optional<UserDto> getUserById(String userId);
+    Page<UserDto> getUsers(Pageable pageable);
+    void changePassword(String userId, String newPassword);
+    UserDto updateStatus(String userId, String status);
+    Cms05User registerUser(UserRegisterRequest request);
+    Cms05User registerSiteManager(SiteManagerRegisterRequest request);
+    SiteInfo getSiteInfo();
 } 

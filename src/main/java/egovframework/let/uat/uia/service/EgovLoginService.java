@@ -1,6 +1,7 @@
 package egovframework.let.uat.uia.service;
 
 import egovframework.com.cmm.LoginVO;
+import java.util.Map;
 
 /**
  * 일반 로그인을 처리하는 비즈니스 구현 클래스
@@ -23,12 +24,12 @@ public interface EgovLoginService {
 
 	/**
 	 * 일반 로그인을 처리한다
-	 * @return LoginVO
+	 * @return Map<String, Object> - 토큰과 로그인 정보
 	 *
 	 * @param vo    LoginVO
 	 * @exception Exception Exception
 	 */
-	public LoginVO actionLogin(LoginVO vo) throws Exception;
+	public Map<String, Object> actionLogin(LoginVO vo) throws Exception;
 
 	/**
 	 * 아이디를 찾는다.

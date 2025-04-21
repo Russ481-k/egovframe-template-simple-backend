@@ -2,8 +2,7 @@ package egovframework.com.cmm.service;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,8 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  *
  */
 @Schema(description = "파일 정보 VO")
-@Getter
-@Setter
+@Data
 public class FileVO implements Serializable {
 
     /**
@@ -34,31 +32,31 @@ public class FileVO implements Serializable {
 	private static final long serialVersionUID = -287950405903719128L;
 	
 	@Schema(description = "첨부파일 아이디")
-    public String atchFileId = "";
+    private String atchFileId = "";
 	
 	@Schema(description = "생성일자")
-    public String creatDt = "";
+    private String creatDt = "";
 	
 	@Schema(description = "파일내용")
-    public String fileCn = "";
+    private String fileCn = "";
 	
 	@Schema(description = "파일확장자")
-    public String fileExtsn = "";
+    private String fileExtsn = "";
 	
 	@Schema(description = "파일크기")
-    public String fileMg = "";
+    private String fileMg = "";
 	
 	@Schema(description = "파일연번")
-    public String fileSn = "";
+    private String fileSn = "";
     
 	@Schema(description = "파일저장경로")
-    public String fileStreCours = "";
+    private String fileStreCours = "";
     
 	@Schema(description = "원파일명")
-    public String orignlFileNm = "";
+    private String orignlFileNm = "";
 	
 	@Schema(description = "저장파일명")
-    public String streFileNm = "";
+    private String streFileNm = "";
 
     /**
      * toString 메소드를 대치한다.

@@ -44,4 +44,10 @@ public class ContentDto {
     
     // 다국어 지원
     private String languageCode;  // ko, en, ja 등
+    
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
 } 

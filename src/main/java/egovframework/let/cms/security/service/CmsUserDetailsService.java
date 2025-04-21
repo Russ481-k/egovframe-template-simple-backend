@@ -1,6 +1,6 @@
 package egovframework.let.cms.security.service;
 
-import egovframework.let.cms.user.domain.User;
+import egovframework.let.cms.user.domain.Cms05User;
 import egovframework.let.cms.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Primary;
 
 import java.util.Collections;
 
 @Service
+@Primary
 @RequiredArgsConstructor
 public class CmsUserDetailsService implements UserDetailsService {
 
@@ -19,7 +21,7 @@ public class CmsUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        Cms05User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         if (user.getRole() == null) {

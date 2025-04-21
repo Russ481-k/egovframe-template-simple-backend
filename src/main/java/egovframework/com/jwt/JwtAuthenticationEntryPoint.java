@@ -1,20 +1,19 @@
 package egovframework.com.jwt;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import egovframework.com.cmm.ResponseCode;
+import egovframework.com.cmm.response.ApiResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import egovframework.com.cmm.ResponseCode;
-import egovframework.com.cmm.service.ResultVO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * fileName       : JwtAuthenticationEntryPoint
@@ -27,21 +26,29 @@ import egovframework.com.cmm.service.ResultVO;
  * 2023/06/11        crlee       최초 생성
  */
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    private final ObjectMapper objectMapper;
+
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        ResultVO resultVO = new ResultVO();
-        resultVO.setResultCode(ResponseCode.AUTH_ERROR.getCode());
-        resultVO.setResultMessage(ResponseCode.AUTH_ERROR.getMessage());
-        ObjectMapper mapper = new ObjectMapper();
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                        AuthenticationException authException) throws IOException {
+        
+        log.error("Unauthorized error: {}", authException.getMessage());
 
-        String jsonInString = mapper.writeValueAsString(resultVO);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setContentType(MediaType.APPLICATION_JSON.toString());
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().println(jsonInString);
+        ApiResponse<?> apiResponse = ApiResponse.builder()
+                .status(ResponseCode.UNAUTHORIZED.getStatus())
+                .code(ResponseCode.UNAUTHORIZED.getCode())
+                .message(authException.getMessage())
+                .build();
+
+        response.getWriter().write(objectMapper.writeValueAsString(apiResponse));
     }
 }

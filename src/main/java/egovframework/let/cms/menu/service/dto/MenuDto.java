@@ -32,4 +32,56 @@ public class MenuDto {
     // 메타 정보
     private String createdBy;
     private String updatedBy;
+
+    private Long menuId;
+    private String menuNm;
+    private Integer menuOrdr;
+    private String useAt;
+    private String menuDesc;
+    private String menuIcon;
+    private String target;
+    private String menuLevel;
+    private String menuPath;
+    private String menuQuery;
+    private String menuParam;
+    private String menuStyle;
+    private String menuClass;
+    private String menuScript;
+    private String menuPermission;
+    private String menuVisible;
+    private String menuSort;
+    private String menuCache;
+    private String menuAuth;
+    private String menuLog;
+    private String menuStatus;
+    private String menuCreated;
+    private String menuModified;
+    private String menuDeleted;
+    private String menuVersion;
+    private String menuRemark;
+
+    // 추가된 getter/setter 메서드들
+    public String getMenuNm() {
+        return menuNm;
+    }
+
+    public void setMenuNm(String menuNm) {
+        this.menuNm = menuNm;
+    }
+
+    public Integer getMenuOrdr() {
+        return menuOrdr;
+    }
+
+    public void setMenuOrdr(Integer menuOrdr) {
+        this.menuOrdr = menuOrdr;
+    }
+
+    public String getUseAt() {
+        return useAt;
+    }
+
+    public void setUseAt(String useAt) {
+        this.useAt = useAt;
+    }
 } 

@@ -36,4 +36,20 @@ public class TemplateDto {
     // 메타 정보
     private String createdBy;
     private String updatedBy;
+
+    private String name;
+    private String content;
+    private String type;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 } 

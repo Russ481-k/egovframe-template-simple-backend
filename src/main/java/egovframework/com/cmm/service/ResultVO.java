@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Schema(description = "응답 객체 VO")
-@Getter
-@Setter
+@Data
 public class ResultVO {
 
 	@Schema(description = "응답 코드")
@@ -26,6 +24,5 @@ public class ResultVO {
 	public Object getResult(String key) {
 		return this.result.get(key);
 	}
-
 
 }

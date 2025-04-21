@@ -1,12 +1,17 @@
 package egovframework.com.cmm;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.validation.constraints.Email;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Class Name : LoginVO.java
@@ -26,7 +31,7 @@ import lombok.Setter;
 @Schema(description = "사용자 정보 VO")
 @Getter
 @Setter
-public class LoginVO implements Serializable{
+public class LoginVO implements UserDetails {
 	
 	/**
 	 * 
@@ -82,5 +87,42 @@ public class LoginVO implements Serializable{
 	@Schema(description = "그룹명") //권한 그룹명 추가
 	private String groupNm;
 	
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
 	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// 기본 권한과 그룹 권한을 모두 포함
+		return Stream.of(
+				new SimpleGrantedAuthority("ROLE_" + userSe),  // 사용자 구분 기반 권한
+				new SimpleGrantedAuthority(groupNm)            // 그룹 기반 권한
+		).collect(Collectors.toList());
+	}
+	
+	@Override
+	public String getUsername() {
+		return id;
+	}
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }

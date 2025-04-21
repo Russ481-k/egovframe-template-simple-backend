@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import egovframework.com.cmm.ComDefaultVO;
-import egovframework.com.cmm.ResponseCode;
 import egovframework.com.cmm.service.ResultVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
@@ -92,8 +91,8 @@ public class EgovMainApiController {
 		resultMap.put("galList", map.get("resultList"));
 
 		resultVO.setResult(resultMap);
-		resultVO.setResultCode(ResponseCode.SUCCESS.getCode());
-		resultVO.setResultMessage(ResponseCode.SUCCESS.getMessage());
+		resultVO.setResultCode(0);
+		resultVO.setResultMessage("성공 !!!");
 
 		return resultVO;
 	}

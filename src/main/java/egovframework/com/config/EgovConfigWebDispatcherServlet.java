@@ -9,9 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import egovframework.com.cmm.interceptor.AuthenticInterceptor;
-import egovframework.com.cmm.interceptor.CustomAuthenticInterceptor;
-
 /**
  * @ClassName : EgovConfigWebDispatcherServlet.java
  * @Description : DispatcherServlet 설정
@@ -26,6 +23,7 @@ import egovframework.com.cmm.interceptor.CustomAuthenticInterceptor;
  *   수정일              수정자               수정내용
  *  -------------  ------------   ---------------------
  *   2021. 7. 20    윤주호               최초 생성
+ *   2024. 3. 14    JWT 기반 인증으로 변경
  * </pre>
  *
  */
@@ -45,19 +43,7 @@ public class EgovConfigWebDispatcherServlet implements WebMvcConfigurer {
 	// -------------------------------------------------------------
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthenticInterceptor())
-			.addPathPatterns(
-				"/auth/*")
-			.excludePathPatterns(
-				"/auth/login",
-				"/auth/login-jwt",
-				"/auth/logout"
-				);
-		registry.addInterceptor(new CustomAuthenticInterceptor())
-			.addPathPatterns(
-				"/**/*.do")
-			.excludePathPatterns(
-				"/auth/**");
+		// Interceptor 설정은 제거됨
 	}
 
 	// -------------------------------------------------------------
